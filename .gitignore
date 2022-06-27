@@ -1,0 +1,14 @@
+/.dapper
+/.cache
+/bin
+/dist
+*.swp
+.idea
+/acorn
+/go.work
+/go.work.sum
+/cosign.key
+/releases
+/pkg/ui/server/static/dashboard
+
+apiserver.local.config
