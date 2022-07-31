@@ -3,7 +3,7 @@ module github.com/acorn-io/traefik-hub-publisher
 go 1.18
 
 require (
-	github.com/acorn-io/baaah v0.0.0-20220627023500-fb2314473b8e
+	github.com/acorn-io/baaah v0.0.0-20220731052009-5a4a3228e9bc
 	github.com/sirupsen/logrus v1.8.1
 	github.com/traefik/hub-agent-kubernetes v0.4.0
 	golang.org/x/crypto v0.0.0-20211215165025-cf75a172585e
@@ -20,7 +20,6 @@ require (
 	github.com/evanphx/json-patch v4.12.0+incompatible // indirect
 	github.com/go-logr/logr v1.2.0 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
-	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/go-cmp v0.5.6 // indirect
 	github.com/google/gofuzz v1.1.0 // indirect
