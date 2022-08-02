@@ -6,7 +6,7 @@ require (
 	github.com/acorn-io/baaah v0.0.0-20220627023500-fb2314473b8e
 	github.com/sirupsen/logrus v1.8.1
 	github.com/traefik/hub-agent-kubernetes v0.4.0
-	golang.org/x/crypto v0.0.0-20211215165025-cf75a172585e
+	golang.org/x/crypto v0.0.0-20220722155217-630584e8d5aa
 	k8s.io/api v0.23.6
 	k8s.io/apiextensions-apiserver v0.23.5
 	k8s.io/apimachinery v0.23.6
