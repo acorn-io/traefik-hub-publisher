@@ -1,6 +1,6 @@
 module github.com/acorn-io/traefik-hub-publisher
 
-go 1.18
+go 1.19
 
 require (
 	github.com/acorn-io/baaah v0.0.0-20220627023500-fb2314473b8e
