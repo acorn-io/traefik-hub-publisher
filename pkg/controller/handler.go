@@ -3,48 +3,24 @@ package controller
 import (
 	"strings"
 
-	"github.com/acorn-io/baaah/pkg/randomtoken"
 	"github.com/acorn-io/baaah/pkg/router"
 	"github.com/traefik/hub-agent-kubernetes/pkg/crd/api/hub/v1alpha1"
-	"golang.org/x/crypto/bcrypt"
 	networkingv1 "k8s.io/api/networking/v1"
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-func createACP(req router.Request) error {
+func getACP(req router.Request) (*v1alpha1.EdgeIngressACP, error) {
 	acp := &v1alpha1.AccessControlPolicy{}
 	err := req.Get(acp, "", "acorn")
 	if apierrors.IsNotFound(err) {
-		password, err := randomtoken.Generate()
-		if err != nil {
-			return err
-		}
-		token, err := bcrypt.GenerateFromPassword([]byte(password), 0)
-		if err != nil {
-			return err
-		}
-
-		err = req.Client.Create(req.Ctx, &v1alpha1.AccessControlPolicy{
-			ObjectMeta: metav1.ObjectMeta{
-				Name: "acorn",
-			},
-			Spec: v1alpha1.AccessControlPolicySpec{
-				BasicAuth: &v1alpha1.AccessControlPolicyBasicAuth{
-					Users: []string{
-						"acorn:" + string(token),
-					},
-					StripAuthorizationHeader: true,
-				},
-			},
-		})
-		if apierrors.IsAlreadyExists(err) {
-			return nil
-		}
-		return err
+		return nil, nil
+	} else if err != nil {
+		return nil, err
 	}
-
-	return err
+	return &v1alpha1.EdgeIngressACP{
+		Name: "acorn",
+	}, nil
 }
 
 func UpdateIngressWithDomain(req router.Request, resp router.Response) error {
@@ -75,7 +51,8 @@ func UpdateIngressWithDomain(req router.Request, resp router.Response) error {
 func CreateEdgeService(req router.Request, resp router.Response) error {
 	ingress := req.Object.(*networkingv1.Ingress)
 
-	if err := createACP(req); err != nil {
+	acp, err := getACP(req)
+	if err != nil {
 		return err
 	}
 
@@ -96,9 +73,7 @@ func CreateEdgeService(req router.Request, resp router.Response) error {
 					},
 				},
 				Spec: v1alpha1.EdgeIngressSpec{
-					ACP: &v1alpha1.EdgeIngressACP{
-						Name: "acorn",
-					},
+					ACP: acp,
 					Service: v1alpha1.EdgeIngressService{
 						Name: path.Backend.Service.Name,
 						Port: int(path.Backend.Service.Port.Number),

@@ -10,7 +10,7 @@ containers: default: {
 			{
 				verbs: ["*"]
 				apiGroups: ["hub.traefik.io"]
-				resources: ["edgeingresses"]
+				resources: ["edgeingresses", "accesscontrolpolicies"]
 			},
 			{
 				verbs: ["get"]
