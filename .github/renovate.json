@@ -1,5 +1,5 @@
 {
-    "labels": ["renovate"]
+    "labels": ["renovate"],
     "extends": [
         "config:base"
     ],
